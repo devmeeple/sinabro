@@ -1,0 +1,15 @@
+version: '3.8'
+
+services: # 관리할 서비스 정의
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 # 인코딩 정의
