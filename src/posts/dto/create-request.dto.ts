@@ -13,4 +13,12 @@ export class CreateRequest {
     message: '내용은 필수입니다',
   })
   content: string;
+
+  static of(title: string, content: string) {
+    const dto = new CreateRequest();
+    dto.title = title;
+    dto.content = content;
+
+    return dto;
+  }
 }

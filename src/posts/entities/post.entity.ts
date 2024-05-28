@@ -10,4 +10,12 @@ export class Post {
 
   @Column()
   content: string;
+
+  static of(title: string, content: string) {
+    const post = new Post();
+    post.title = title;
+    post.content = content;
+
+    return post;
+  }
 }
