@@ -72,4 +72,35 @@ describe('PostsController (e2e)', () => {
     expect(response.body.message[0]).toEqual('제목은 필수입니다');
     expect(response.body.message[1]).toEqual('내용은 필수입니다');
   });
+
+  it('/posts/:id 게시글 단건조회', async () => {
+    // given
+    const post = Post.of('제목입니다', '내용입니다');
+    const savedPost = await postsRepository.save(post);
+
+    // when
+    const response = await request(app.getHttpServer()).get(
+      `/posts/${savedPost.id}`,
+    );
+
+    // then
+    expect(response.status).toBe(HttpStatus.OK);
+
+    expect(response.body.title).toBe('제목입니다');
+    expect(response.body.content).toBe('내용입니다');
+  });
+
+  it('/posts/:id 게시글 단건조회 없는 게시글을 조회하면 오류가 발생한다', async () => {
+    // given
+    const badId = 999;
+
+    // when
+    const response = await request(app.getHttpServer()).get(`/posts/${badId}`);
+
+    // then
+    expect(response.status).toBe(HttpStatus.NOT_FOUND);
+    expect(response.body.message).toEqual(
+      `${badId}번 게시글을 찾을 수 없습니다`,
+    );
+  });
 });

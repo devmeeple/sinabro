@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
 import { CreateRequest } from './dto/create-request.dto';
 import { PostsService } from './posts.service';
 
@@ -11,5 +11,10 @@ export class PostsController {
   @Post()
   postPost(@Body() request: CreateRequest) {
     return this.postsService.writePost(request);
+  }
+
+  @Get(':id')
+  getPostById(@Param('id') id: number) {
+    return this.postsService.getPostById(id);
   }
 }
