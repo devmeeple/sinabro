@@ -103,4 +103,25 @@ describe('PostsController (e2e)', () => {
       `${badId}번 게시글을 찾을 수 없습니다`,
     );
   });
+
+  it('/posts 전체 게시글을 조회한다', async () => {
+    // given
+    const post1 = Post.of('제목입니다1', '내용입니다1');
+    const post2 = Post.of('제목입니다2', '내용입니다2');
+
+    await postsRepository.save([post1, post2]);
+
+    // when
+    const response = await request(app.getHttpServer()).get('/posts');
+
+    // then
+    expect(response.status).toBe(HttpStatus.OK);
+    expect(response.body).toHaveLength(2);
+
+    expect(response.body[0].title).toBe('제목입니다1');
+    expect(response.body[0].content).toBe('내용입니다1');
+
+    expect(response.body[1].title).toBe('제목입니다2');
+    expect(response.body[1].content).toBe('내용입니다2');
+  });
 });

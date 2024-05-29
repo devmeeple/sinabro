@@ -17,4 +17,9 @@ export class PostsController {
   getPostById(@Param('id') id: number) {
     return this.postsService.getPostById(id);
   }
+
+  @Get()
+  getPosts() {
+    return this.postsService.getPosts();
+  }
 }

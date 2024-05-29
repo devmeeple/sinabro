@@ -31,4 +31,9 @@ export class PostsService {
 
     return PostsResponse.of(post);
   }
+
+  async getPosts() {
+    const posts = await this.postsRepository.find();
+    return posts.map((post) => PostsResponse.of(post));
+  }
 }
