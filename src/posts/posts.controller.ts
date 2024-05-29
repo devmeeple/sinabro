@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Logger,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateRequest } from './dto/create-request.dto';
 import { PostsService } from './posts.service';
+import { UpdateRequest } from './dto/update-request.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -21,5 +30,10 @@ export class PostsController {
   @Get()
   getPosts() {
     return this.postsService.getPosts();
+  }
+
+  @Patch(':id')
+  updatePost(@Param('id') id: number, @Body() request: UpdateRequest) {
+    return this.postsService.updatePost(id, request);
   }
 }

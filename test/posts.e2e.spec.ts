@@ -124,4 +124,20 @@ describe('PostsController (e2e)', () => {
     expect(response.body[1].title).toBe('제목입니다2');
     expect(response.body[1].content).toBe('내용입니다2');
   });
+
+  it('/posts/:id 회고를 수정한다', async () => {
+    // given
+    const post = Post.of('제목입니다', '내용입니다');
+    const savedPost = await postsRepository.save(post);
+
+    // when
+    const response = await request(app.getHttpServer())
+      .patch(`/posts/${savedPost.id}`)
+      .send({
+        title: '수정된 제목입니다',
+      });
+
+    // then
+    expect(response.status).toBe(HttpStatus.OK);
+  });
 });
