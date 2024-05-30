@@ -1,8 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
-  Logger,
   Param,
   Patch,
   Post,
@@ -14,8 +14,6 @@ import { UpdateRequest } from './dto/update-request.dto';
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
-
-  private readonly logger = new Logger(PostsController.name);
 
   @Post()
   postPost(@Body() request: CreateRequest) {
@@ -35,5 +33,10 @@ export class PostsController {
   @Patch(':id')
   updatePost(@Param('id') id: number, @Body() request: UpdateRequest) {
     return this.postsService.updatePost(id, request);
+  }
+
+  @Delete(':id')
+  deletePost(@Param('id') id: number) {
+    return this.postsService.deletePost(id);
   }
 }

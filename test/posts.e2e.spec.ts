@@ -140,4 +140,20 @@ describe('PostsController (e2e)', () => {
     // then
     expect(response.status).toBe(HttpStatus.OK);
   });
+
+  it('/posts 회고 1개를 삭제한다', async () => {
+    // given
+    const post = Post.of('제목입니다', '내용입니다');
+    const savedPost = await postsRepository.save(post);
+
+    // when
+    const response = await request(app.getHttpServer()).delete(
+      `/posts/${savedPost.id}`,
+    );
+
+    // then
+    expect(response.status).toBe(HttpStatus.OK);
+
+    expect(await postsRepository.find()).toHaveLength(0);
+  });
 });

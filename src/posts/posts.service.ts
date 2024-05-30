@@ -47,4 +47,14 @@ export class PostsService {
 
     await this.postsRepository.update(id, request);
   }
+
+  async deletePost(id: number) {
+    const post = await this.postsRepository.findOne({ where: { id } });
+
+    if (!post) {
+      throw new NotFoundException(`${id}번 게시글을 찾을 수 없습니다`);
+    }
+
+    return this.postsRepository.delete(id);
+  }
 }
