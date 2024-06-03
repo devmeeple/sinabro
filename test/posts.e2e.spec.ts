@@ -32,7 +32,7 @@ describe('PostsController (e2e)', () => {
     await postsRepository.clear();
   });
 
-  it('/posts 회고를 작성한다', async () => {
+  it('/posts 게시글을 작성한다', async () => {
     // given
     const expectedRequest = {
       title: '제목입니다',
@@ -125,7 +125,7 @@ describe('PostsController (e2e)', () => {
     expect(response.body[1].content).toBe('내용입니다2');
   });
 
-  it('/posts/:id 회고를 수정한다', async () => {
+  it('/posts/:id 게시글을 수정한다', async () => {
     // given
     const post = Post.of('제목입니다', '내용입니다');
     const savedPost = await postsRepository.save(post);
@@ -141,7 +141,7 @@ describe('PostsController (e2e)', () => {
     expect(response.status).toBe(HttpStatus.OK);
   });
 
-  it('/posts 회고 1개를 삭제한다', async () => {
+  it('/posts 게시글 1개를 삭제한다', async () => {
     // given
     const post = Post.of('제목입니다', '내용입니다');
     const savedPost = await postsRepository.save(post);
@@ -155,5 +155,46 @@ describe('PostsController (e2e)', () => {
     expect(response.status).toBe(HttpStatus.OK);
 
     expect(await postsRepository.find()).toHaveLength(0);
+  });
+
+  it('/posts/:id  존재하지 않는 게시글을 조회한다', async () => {
+    // given
+    const notFoundId = 999;
+
+    // when
+    const response = await request(app.getHttpServer())
+      .get(`/posts/${notFoundId}`)
+      .expect(HttpStatus.NOT_FOUND);
+
+    expect(response.body.message).toEqual(
+      `${notFoundId}번 게시글을 찾을 수 없습니다`,
+    );
+  });
+
+  it('/posts/:id 존재하지 않는 게시글을 수정한다', async () => {
+    // given
+    const notFoundId = 999;
+
+    // when
+    const response = await request(app.getHttpServer())
+      .patch(`/posts/${notFoundId}`)
+      .expect(HttpStatus.NOT_FOUND);
+
+    // then
+    expect(response.body.message).toEqual(
+      `${notFoundId}번 게시글을 찾을 수 없습니다`,
+    );
+  });
+
+  it('잘못된 ID로 요청을 보내면 400(Bad Request) 에러가 발생한다', () => {
+    // given
+    const badRequestId = 'bad';
+
+    // when
+    request(app.getHttpServer())
+      .get(`/posts/${badRequestId}`)
+      .expect(HttpStatus.BAD_REQUEST);
+
+    // then 에러메시지를 커스텀하고 결과를 검증할 수 있다
   });
 });
