@@ -14,4 +14,17 @@ export class TestHelper {
       logging: true,
     });
   }
+
+  static getSQLiteTestConnectionOptions(
+    entities: TypeOrmModuleOptions['entities'],
+  ) {
+    return TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: ':memory:',
+      dropSchema: true,
+      entities,
+      synchronize: true,
+      logging: true,
+    });
+  }
 }

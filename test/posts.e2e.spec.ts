@@ -14,7 +14,7 @@ describe('PostsController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
-      imports: [PostsModule, TestHelper.getTypeOrmPgsqlModule([Post])],
+      imports: [PostsModule, TestHelper.getSQLiteTestConnectionOptions([Post])],
     }).compile();
 
     app = moduleFixture.createNestApplication();
