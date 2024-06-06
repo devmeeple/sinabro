@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateRequest } from './dto/create-request.dto';
 import { PostsService } from './posts.service';
 import { UpdateRequest } from './dto/update-request.dto';
+import { PaginatePost } from './dto/paginate-post.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -27,8 +29,8 @@ export class PostsController {
   }
 
   @Get()
-  getPosts() {
-    return this.postsService.getPosts();
+  getPostsWithPagination(@Query() pageNation: PaginatePost) {
+    return this.postsService.getPostsWithPagination(pageNation);
   }
 
   @Patch(':id')
