@@ -1,22 +1,24 @@
 # 시나브로
 
+회고(게시글) 쓰기, 읽기, 수정, 삭제 API 개발
+
 ## 구현기능
 
-- [ ] 프로젝트 설정
+- [x] 프로젝트 설정
     - [x] 데이터베이스(TypeORM, Postgresql)
 - [x] 회고 쓰기
-- [ ] 회고 읽기
-    - [ ] 회고 리스트
-    - [ ] 페이징 처리
+- [x] 회고 읽기
+    - [x] 회고 리스트
+    - [x] 페이징 처리
     - [x] 회고 상세
     - [x] 응답 클래스 분리
 - [x] 회고 수정
 - [x] 회고 삭제
-- [ ] 예외 처리
+- [x] 예외 처리
 
 ## 실행방법
 
-dokcer-compose를 통해 Postgresql를 실행
+dokcer-compose를 사용해 Postgresql 실행
 
 ```shell
 docker-compose up -d
